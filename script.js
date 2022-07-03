@@ -13,22 +13,23 @@ $(function(){
 
     bindEvents = function(){
         $mainMenuItems.children(".images").click(function(){
-            var newIndex = $(this).parent().index(),
-            $item = $mainMenuItems.eq(newIndex);
-
-            if (openedIndex === newIndex){
-                animateItem($item, false, 250); 
-                openedIndex =  -1;
-            }
-            else{
-                if(validIndex(newIndex)){
-                    animateItem($mainMenuItems.eq(openedIndex), false, 250);
-                    openedIndex = newIndex;
-                    animateItem ($item, true, 250)
-                }
-            }
-            
+            var newIndex = $(this).parent().index();
+            chekAndAnimateItem(newIndex);     
         });
+
+        $(".button").hover(
+            function(){
+                $(this).addClass("hovered");
+            },
+            function(){
+                $(this).removeClass("hovered");
+            });
+        
+        $(".button").click(function(){
+            var newIndex = $(this).index();
+            chekAndAnimateItem(newIndex);    
+        });
+
     },
 
     validIndex = function(indexToCheck){
@@ -42,6 +43,20 @@ $(function(){
         $colorImage.animate(colorImageParam, speed);
         $item.animate(itemParam, speed);
     };
+
+    chekAndAnimateItem = function(indexToChekAndAnimate){
+        if (openedIndex === indexToChekAndAnimate){
+            animateItem($mainMenuItems.eq(indexToChekAndAnimate), false, 250); 
+            openedIndex =  -1;
+        }
+        else{
+            if(validIndex(indexToChekAndAnimate)){
+                animateItem($mainMenuItems.eq(openedIndex), false, 250);
+                openedIndex = indexToChekAndAnimate;
+                animateItem ($mainMenuItems.eq(openedIndex), true, 250)
+            }
+        }
+    }
 
     init()
 
